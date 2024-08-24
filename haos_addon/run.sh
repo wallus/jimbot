@@ -2,7 +2,7 @@
 set -e
 
 # Load Bashio library
-source /usr/lib/bashio/bashio.sh
+# source /usr/lib/bashio/bashio.sh
 
 # Retrieve configuration options using bashio
 OPENAI_API_KEY=$(bashio::config 'OPENAI_API_KEY')
