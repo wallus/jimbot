@@ -1,2 +1,0 @@
-export OPENAI_API_KEY=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
-python app.py 
