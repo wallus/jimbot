@@ -16,7 +16,7 @@ if command -v bashio >/dev/null 2>&1; then
 else
     echo "bashio not found, using default values"
     # Provide fallback or default values
-    OPENAI_API_KEY=${OPENAI_API_KEY:-"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"}
+    OPENAI_API_KEY=${OPENAI_API_KEY:-"sk-dkv9oMuyXZ9YXJGaACj4TLIIB2gHuTS7Hu83Y-pRXzT3BlbkFJYhW7_XMFMyxeP05rO708BMF18z3beuWiK_5wgXrt8A"}
     PORT=${PORT:-8087}
 fi
 
