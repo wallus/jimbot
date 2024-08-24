@@ -1,12 +1,9 @@
-# Use a Home Assistant base image that is Alpine-based
+# Use a Home Assistant base image
 ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.13
 FROM $BUILD_FROM
 
-# Install Python 3 and pip3
-RUN apk add --no-cache python3 py3-pip
-
-# Install virtualenv
-RUN pip3 install virtualenv
+# Install Python 3, pip3, and virtualenv via apk
+RUN apk add --no-cache python3 py3-pip py3-virtualenv
 
 # Create and activate a virtual environment
 RUN python3 -m venv /app/venv
