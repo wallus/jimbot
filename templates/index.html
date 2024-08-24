@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jim's Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #chat-container {
+            max-width: 600px;
+            width: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #user-input-container {
+            display: flex;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #ddd;
+        }
+        #user-input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #send-button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 4px;
+        }
+        #chat-output {
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column-reverse;
+            height: 400px; /* Set a height so that the chat output is scrollable */
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .user {
+            font-weight: bold;
+            color: #1a73e8;
+            align-self: flex-end;
+        }
+        .bot {
+            color: #555;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="user-input-container">
+            <input type="text" id="user-input" placeholder="Type your question here...">
+            <button id="send-button">Send</button>
+        </div>
+        <div id="chat-output"></div>
+    </div>
+
+    <script>
+        let chatHistory = [];
+
+        function updateChatOutput() {
+            const chatOutput = document.getElementById('chat-output');
+            chatOutput.innerHTML = ''; // Clear the current output
+
+            // Loop through chatHistory and append each message to the chat output in reverse order
+            for (let i = chatHistory.length - 1; i >= 0; i--) {
+                const message = chatHistory[i];
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                if (message.role === 'user') {
+                    messageDiv.classList.add('user');
+                    messageDiv.textContent = `You: ${message.content}`;
+                } else if (message.role === 'bot') {
+                    messageDiv.classList.add('bot');
+                    messageDiv.textContent = `Bot: ${message.content}`;
+                }
+                chatOutput.appendChild(messageDiv);
+            }
+
+            // Scroll to the bottom to see the latest message (which is at the top due to reverse ordering)
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+        }
+
+        document.getElementById('send-button').addEventListener('click', async function() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') {
+                alert('Please enter a question.');
+                return;
+            }
+
+            chatHistory.push({ role: 'user', content: userInput });
+            document.getElementById('user-input').value = '';
+            updateChatOutput();
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input: userInput })
+                });
+
+                const result = await response.json();
+                chatHistory.push({ role: 'bot', content: result.response });
+                updateChatOutput();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error communicating with the bot.');
+            }
+        });
+
+        // Add enter key support for sending messages
+        document.getElementById('user-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('send-button').click();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+name: Jim's Chatbot
+version: "0.1.2"
+slug: jims_chatbot
+description: Jim's Chatbot for Home Assistant
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+startup: application
+boot: auto
+host_network: true
+options:
+  openai_api_key: sk-M0G1gnT6ubCSdOdb9WmuAQzN6SeOBIdqiCwq791xh6T3BlbkFJl1363OS4G5ZzswRWKDd5xsFoKgJcLjxVSkX2rKwk4A
+schema:
+  openai_api_key: str
+ports:
+  8080/tcp: 8080
