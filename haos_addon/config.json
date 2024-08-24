@@ -13,6 +13,12 @@
     },
     "webui": "http://[HOST]:[PORT:8087]",
     "ingress": false,
-    "host_network": true
+    "host_network": true,
+    "options": {
+        "OPENAI_API_KEY": ""
+    },
+    "schema": {
+        "OPENAI_API_KEY": "str"
+    }
   }
   
