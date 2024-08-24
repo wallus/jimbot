@@ -1,27 +1,40 @@
 from flask import Flask, render_template, request, jsonify
-import openai
+from openai import OpenAI
 import os
 
 app = Flask(__name__)
 
 # Set your OpenAI API key
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# client = OpenAI(
+  # api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
+# )
 
 # Function to start a thread and get a response from OpenAI
 def generate_response(user_input):
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        print("Debug 1")
+        client = OpenAI()
+        print("Debug 2")
+        completion = client.chat.completions.create(
+            model="gpt-4", 
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": user_input},
-            ]
-        )
-        bot_message = response['choices'][0]['message']['content']
+                {"role": "system", "content": "You are a helpful assistant"},
+                {"role": "user", "content": user_input}])
+
+        print("Debug 3")
+
+        # completion = client.completions.create(model='gpt-4',
+            # messages=[
+                # {"role": "system", "content": "You are a helpful assistant."},
+                # {"role": "user", "content": user_input},
+            # ]
+        # )
+
+        bot_message = completion.choices[0].message.content
         return bot_message
     except Exception as e:
         print(f"Error generating response: {e}")
-        return "Sorry, something went wrong."
+        return f"Sorry, something went wrong! {e}."
 
 @app.route('/')
 def index():
