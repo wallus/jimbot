@@ -1,6 +1,6 @@
 {
     "name": "Jimbot",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "slug": "jimbot",
     "description": "Jim's Amazing Chatbot for Home Assistant",
     "arch": [
@@ -12,6 +12,7 @@
     ],
     "startup": "application",
     "boot": "auto",
+    "init": "false",
     "webui": "http://[HOST]:[PORT:8087]",
     "host_network": true,
     "options": {
