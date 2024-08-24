@@ -1,6 +1,6 @@
 {
   "name": "your-addon-name",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "type": "module",
   "main": "server.js",
   "dependencies": {
