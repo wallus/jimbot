@@ -12,23 +12,12 @@ app = Flask(__name__)
 # Function to start a thread and get a response from OpenAI
 def generate_response(user_input):
     try:
-        print("Debug 1")
         client = OpenAI()
-        print("Debug 2")
         completion = client.chat.completions.create(
             model="gpt-4", 
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
                 {"role": "user", "content": user_input}])
-
-        print("Debug 3")
-
-        # completion = client.completions.create(model='gpt-4',
-            # messages=[
-                # {"role": "system", "content": "You are a helpful assistant."},
-                # {"role": "user", "content": user_input},
-            # ]
-        # )
 
         bot_message = completion.choices[0].message.content
         return bot_message
