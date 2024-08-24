@@ -8,6 +8,9 @@ RUN apk add --no-cache python3 py3-pip
 # Verify that pip3 is installed correctly
 RUN pip3 --version
 
+# Install Python 3, pip3, and build dependencies
+RUN apk add --no-cache python3 py3-pip build-base
+
 # Install Flask using pip3
 RUN pip3 install flask
 
