@@ -1,6 +1,6 @@
 {
     "name": "Jimbot",
-    "version": "0.2.13",
+    "version": "0.2.14",
     "slug": "jimbot",
     "description": "Jim's Amazing Chatbot for Home Assistant",
     "arch": [
@@ -16,10 +16,12 @@
     "webui": "http://[HOST]:[PORT:8087]",
     "host_network": true,
     "options": {
-      "openai_api_key": "Put your openai api key here"
+      "openai_api_key": "Put your openai api key here",
+      "port": "Put your openai api key here"
     },
     "schema": {
-      "openai_api_key": "str"
+      "openai_api_key": "str",
+      "port": "int"
     },
     "ports": {
       "8080/tcp": 8087
