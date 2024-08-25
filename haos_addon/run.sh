@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 set -e
 
+echo "---> Starting at: $(date '+%Y-%m-%d %H:%M:%S')"
+
 # Retrieve configuration options using Bashio, with defaults
 OPENAI_API_KEY="$(bashio::config 'OPENAI_API_KEY')"
 PORT="$(bashio::config 'port')"
