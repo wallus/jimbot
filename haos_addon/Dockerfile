@@ -10,13 +10,15 @@ RUN python3 -m venv /app/venv
 ENV PATH="/app/venv/bin:$PATH"
 
 # Install Flask inside the virtual environment
-RUN pip3 install flask
+RUN pip3 install flask openai logging
 
 # Copy your script to the appropriate directory
-COPY run.sh /app/run.sh
+COPY run.sh /
+COPY app.py /
+COPY templates /templates
 
 # Ensure the script is executable
-RUN chmod +x /app/run.sh
+RUN chmod +x /run.sh
 
 # Set the default command to run your script
-CMD ["/app/run.sh"]
+CMD ["/run.sh"]

@@ -78,6 +78,7 @@
         <div id="chat-output"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         let chatHistory = [];
 
@@ -95,7 +96,8 @@
                     messageDiv.textContent = `You: ${message.content}`;
                 } else if (message.role === 'bot') {
                     messageDiv.classList.add('bot');
-                    messageDiv.textContent = `Bot: ${message.content}`;
+                    messageDiv.innerHTML = `Bot: ${marked.parse(message.content)}`;
+                    /* messageDiv.textContent = `Bot: ${message.content}`;*/
                 }
                 chatOutput.appendChild(messageDiv);
             }
@@ -116,7 +118,7 @@
             updateChatOutput();
 
             try {
-                const response = await fetch('/chat', {
+                const response = await fetch('chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ input: userInput })

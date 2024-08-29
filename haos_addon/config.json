@@ -1,29 +1,34 @@
 {
-    "name": "Jimbot",
-    "version": "0.2.16",
-    "slug": "jimbot",
-    "description": "Jim's Amazing Chatbot for Home Assistant",
-    "arch": [
-      "armhf",
-      "armv7",
-      "aarch64",
-      "amd64",
-      "i386"
-    ],
-    "startup": "application",
-    "boot": "auto",
-    "init": "false",
-    "webui": "http://[HOST]:[PORT:8087]",
-    "host_network": true,
-    "options": {
-      "openai_api_key": "Put your openai api key here",
-      "port": 8087
-    },
-    "schema": {
-      "openai_api_key": "str",
-      "port": "int"
-    },
-    "ports": {
-      "8080/tcp": 8087
-    }
+  "name": "Jimbot",
+  "version": "0.4.0",
+  "slug": "jimbot2",
+  "description": "Jim's Amazing Chatbot for Home Assistant",
+  "arch": [
+    "armhf",
+    "armv7",
+    "aarch64",
+    "amd64",
+    "i386"
+  ],
+  "startup": "application",
+  "boot": "auto",
+  "init": "false",
+  "ingress": "true",
+  "ingress_port": 51645,
+  "ingress_entry": "/",
+  "panel_icon": "mdi:chat",
+  "panel_title": "Jim Bot",
+  "webui": "http://[HOST]:[PORT:51645]",
+  "host_network": true,
+  "options": {
+    "openai_api_key": "Put your openai api key here",
+    "port": 51645
+  },
+  "schema": {
+    "openai_api_key": "str",
+    "port": "int"
+  },
+  "ports": {
+    "8080/tcp": 51645
   }
+}
