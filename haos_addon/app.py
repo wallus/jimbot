@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 import openai
+from openai import OpenAI
 import os
 import logging
-from openai import OpenAI
+
+# import ptvsd
+# ptvsd.enable_attach(address=('0.0.0.0', 5678))
 
 logging.basicConfig(level=logging.INFO)
 logging.info("Running app.py.....")
@@ -10,10 +13,13 @@ logging.info("Running app.py.....")
 app = Flask(__name__)
 
 # Initialize the OpenAI client with the API key
-# openai.api_key = os.getenv("OPENAI_API_KEY")
+
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("No OpenAI API key found in environment variables")
 
 client = OpenAI(
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = api_key
 )
 
 system_prompt = """You are a helpful assistant who desperately wants to help people to use Maptek products. 
@@ -102,4 +108,4 @@ def chat():
     return jsonify({"response": bot_response})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8087, debug=True)
+    app.run(host="0.0.0.0", port=51645, debug=True)

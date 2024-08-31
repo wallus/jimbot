@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  web:
+    build:
+      context: ./haos_addon
+      dockerfile: Dockerfile.test
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - FLASK_ENV=development
+      - OPENAI_API_KEY=${OPENAI_API_KEY}  # Reference OPENAI_API_KEY from .env file
+      - PORT=${PORT}                      # Reference OPENAI_API_KEY from .env file
+    command: flask run --host=0.0.0.0 --port=${PORT}  # Reference PORT from .env file 
+    volumes:
+      - ./haos_addon:/app

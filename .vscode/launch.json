@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Flask",
+            "type": "python",
+            "request": "launch",
+            "program": "flask",
+            "args": [
+                "run",
+                "--no-debugger",
+                "--no-reload",
+                "--host=0.0.0.0"
+            ],
+            "jinja": true,
+            "env": {
+                "FLASK_APP": "app.py",
+                "FLASK_ENV": "development"
+            },
+            "port": 5678,
+            "host": "0.0.0.0",
+            "preLaunchTask": "docker-compose up",
+            "postDebugTask": "docker-compose down",
+            "justMyCode": true
+        }
+    ]
+}

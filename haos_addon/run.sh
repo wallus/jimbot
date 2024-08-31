@@ -8,7 +8,7 @@ OPENAI_API_KEY="$(bashio::config 'openai_api_key')"
 PORT="$(bashio::config 'port')"
 
 # Set defaults if the values are not provided
-PORT=${PORT:-8087}  # Default to port 8087
+PORT=${PORT:-5767}  # Default to port 8087
 OPENAI_API_KEY=${OPENAI_API_KEY:-"OPENAI_API_KEY value is not set in the Addon configuration"}  # Default message for API key
 
 # Set FLASK_APP environment variable
