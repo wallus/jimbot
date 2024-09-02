@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.options-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#chat-container {
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+#user-input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+}
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#send-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #1a73e8;
+    color: white;
+    border-radius: 4px;
+}
+#chat-output {
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 400px; /* Set a height so that the chat output is scrollable */
+}
+.message {
+    margin-bottom: 10px;
+}
+.user {
+    font-weight: bold;
+    color: #1a73e8;
+    align-self: flex-end;
+}
+.bot {
+    color: #555;
+    align-self: flex-start;
+}
+label {
+    margin-top: 20px;
+    display: block;
+    font-weight: bold;
+}
+select {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+#selected-key {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
