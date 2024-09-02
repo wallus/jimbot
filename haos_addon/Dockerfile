@@ -16,6 +16,7 @@ RUN pip3 install flask openai logging
 COPY run.sh /
 COPY app.py /
 COPY templates /templates
+COPY static /static
 
 # Ensure the script is executable
 RUN chmod +x /run.sh
