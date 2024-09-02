@@ -1,6 +1,6 @@
 {
   "name": "Jimbot",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "slug": "jimbot2",
   "description": "Jim's Amazing Chatbot for Home Assistant",
   "arch": [
