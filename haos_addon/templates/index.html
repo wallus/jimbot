@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jim's Chatbot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-      <style>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+    <link rel="stylesheet" href="static/styles.css"> 
+    <style>
         .options-container {
             display: flex;           /* Use flexbox to align items horizontally */
             align-items: center;     /* Vertically center the label and select box */
@@ -42,7 +43,7 @@
         // Function to populate the dropdown with keys
         async function populateDropdown() {
             try {
-                const response = await fetch('/get_keys');
+                const response = await fetch('get_keys');
                 const keys = await response.json();
 				
                 const currentAssistantName = keys[0];
@@ -73,7 +74,7 @@
             try {
 		console.log('Sending the key to the server... ');
                 // Send the selected key to the Flask backend
-                const response = await fetch('/set_key', {
+                const response = await fetch('set_key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ selected_key: selectedKey })

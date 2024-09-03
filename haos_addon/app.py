@@ -3,14 +3,16 @@ import openai
 from openai import OpenAI
 import os
 import logging
+from flask_cors import CORS
 
 # import ptvsd
-# ptvsd.enable_attach(address=('0.0.0.0', 5678))
+# ptvsd.enable_attach(address=('0.0.0.0', 5767))
 
 logging.basicConfig(level=logging.INFO)
 logging.info("Running app.py.....")
 
 app = Flask(__name__)
+CORS(app)
 
 # Initialize the OpenAI client with the API key
 api_key = os.getenv("OPENAI_API_KEY")
@@ -37,10 +39,8 @@ threads = []
 # Loop through each assistant in assists and create a thread for each one
 for assistant in assists.data:
     thread = client.beta.threads.create()  # Create a new thread
+    logging.info("Assistant=" + assistant.name + ", thread=" + thread.id)
     threads.append(thread)  # Add the thread to the list
-
-logging.info("Assistant id = " + assists.data[a_index].id)
-logging.info("Thread id = " + threads[a_index].id)
 
 def get_assistant_index_by_name(target_name):
     for index, assistant in enumerate(assists.data):
@@ -88,6 +88,7 @@ def generate_assistant_response(user_input):
                 response = "All messages empty"
         else:
             response = "Messages is empty"
+        logging.info(f"Response: {response}")
         return response
     except Exception as e:
         print(f"Error generating response: {e}")
@@ -151,5 +152,6 @@ def chat():
     bot_response = generate_assistant_response(user_input)
     return jsonify({"response": bot_response})
 
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=51645, debug=True)
+    app.run(host="0.0.0.0", port=5767, debug=True)
