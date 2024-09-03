@@ -1,6 +1,6 @@
 {
   "name": "Jimbot",
-  "version": "0.5.1",
+  "version": "0.5.14",
   "slug": "jimbot2",
   "description": "Jim's Amazing Chatbot for Home Assistant",
   "arch": [
@@ -14,21 +14,21 @@
   "boot": "auto",
   "init": "false",
   "ingress": "true",
-  "ingress_port": 51645,
+  "ingress_port": 5767,
   "ingress_entry": "/",
   "panel_icon": "mdi:chat",
   "panel_title": "Jim Bot",
-  "webui": "http://[HOST]:[PORT:51645]",
+  "webui": "http://[HOST]:[PORT:5767]",
   "host_network": true,
   "options": {
     "openai_api_key": "Put your openai api key here",
-    "port": 51645
+    "port": 5767
   },
   "schema": {
     "openai_api_key": "str",
     "port": "int"
   },
   "ports": {
-    "8080/tcp": 51645
+    "8080/tcp": 5767
   }
 }
