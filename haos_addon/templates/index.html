@@ -4,73 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jim's Chatbot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+      <style>
+        .options-container {
+            display: flex;           /* Use flexbox to align items horizontally */
+            align-items: center;     /* Vertically center the label and select box */
+            margin-bottom: 10px;     /* Optional: Add space below the container */
         }
-        #chat-container {
-            max-width: 600px;
-            width: 100%;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        #user-input-container {
-            display: flex;
-            padding: 10px;
-            background-color: #f4f4f4;
-            border-bottom: 1px solid #ddd;
-        }
-        #user-input {
-            flex-grow: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        #send-button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            background-color: #1a73e8;
-            color: white;
-            border-radius: 4px;
-        }
-        #chat-output {
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column-reverse;
-            height: 400px; /* Set a height so that the chat output is scrollable */
-        }
-        .message {
-            margin-bottom: 10px;
-        }
-        .user {
-            font-weight: bold;
-            color: #1a73e8;
-            align-self: flex-end;
-        }
-        .bot {
-            color: #555;
-            align-self: flex-start;
+
+        #key-select {
+            margin-left: 10px;  /* Optional: Add space between the label and select box */
         }
     </style>
 </head>
 <body>
     <div id="chat-container">
+        <div id="user-input-container">
+        <div class="options-container">
+            <label for="key-select">Select an Assistant:</label>
+            <select id="key-select">
+                <option value="">--Select --</option>
+            </select>
+        </div>
+        </div>
         <div id="user-input-container">
             <input type="text" id="user-input" placeholder="Type your question here...">
             <button id="send-button">Send</button>
@@ -80,7 +36,55 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
+	console.log("JavaScript is loaded and running");
         let chatHistory = [];
+
+        // Function to populate the dropdown with keys
+        async function populateDropdown() {
+            try {
+                const response = await fetch('/get_keys');
+                const keys = await response.json();
+				
+                const currentAssistantName = keys[0];
+                const dropdown = document.getElementById('key-select');
+
+                keys.forEach(key => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = key;
+                    dropdown.appendChild(option);
+                });
+
+                // Set the initial value of the dropdown to the current assistant name
+                if (currentAssistantName) {
+                    dropdown.value = currentAssistantName;
+                }
+				
+            } catch (error) {
+                console.error('Error fetching keys:', error);
+            }
+        }
+
+        // Event listener for the dropdown selection
+        document.getElementById('key-select').addEventListener('change', async function() {
+            const selectedKey = this.value;
+            //document.getElementById('selected-key').textContent = `You selected: ${selectedKey}`;
+
+            try {
+		console.log('Sending the key to the server... ');
+                // Send the selected key to the Flask backend
+                const response = await fetch('/set_key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ selected_key: selectedKey })
+                });
+
+                const result = await response.json();
+                console.log('Server response:', result);
+            } catch (error) {
+                console.error('Error sending key to server:', error);
+            }
+        });
 
         function updateChatOutput() {
             const chatOutput = document.getElementById('chat-output');
@@ -96,8 +100,7 @@
                     messageDiv.textContent = `You: ${message.content}`;
                 } else if (message.role === 'bot') {
                     messageDiv.classList.add('bot');
-                    messageDiv.innerHTML = `Bot: ${marked.parse(message.content)}`;
-                    /* messageDiv.textContent = `Bot: ${message.content}`;*/
+                    messageDiv.innerHTML = `${marked.parse(message.content)}`;
                 }
                 chatOutput.appendChild(messageDiv);
             }
@@ -139,6 +142,10 @@
                 document.getElementById('send-button').click();
             }
         });
+
+        // Populate the dropdown when the page loads
+        populateDropdown();
     </script>
 </body>
 </html>
+
